@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import './App.css';
+import s from './App.module.css';
 import {TodoList} from "./TodoList";
 import {v1} from "uuid";
 
@@ -13,12 +13,6 @@ function App() {
         {id: v1(), title: "Rest API", isDone: false},
         {id: v1(), title: "GraphQL", isDone: false},
     ]);
-
-    let addTask = (title: string) => {
-        let task = {id: v1(), title: title, isDone: false};
-        let newTasks = [task, ...tasks];
-        setTasks(newTasks);
-    }
 
     function removerTask(id: string) {
         // @ts-ignore
@@ -41,13 +35,29 @@ function App() {
         setFilter(value);
     }
 
+    const addTask = (title: string) => {
+        let task = {id: v1(), title: title, isDone: false};
+        let newTasks = [task, ...tasks];
+        setTasks(newTasks);
+    }
+
+    function changeTaskStatus(id: string, isDone: boolean) {
+        let task = tasks.find(t => t.id === id);
+        if (task) {
+            task.isDone = isDone;
+            setTasks([...tasks]);
+        }
+    }
+
     return (
-        <div className="App">
+        <div className={s.App}>
             <TodoList title = "What to learn"
                       tasks = {tasksForTodoList}
                       removerTask = {removerTask}
                       changeFilter={changeFilter}
                       addTask={addTask}
+                      changeTaskStatus = {changeTaskStatus}
+                      filter = {filter}
             />
         </div>
     );
