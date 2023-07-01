@@ -35,13 +35,19 @@ function App() {
         setFilter(value);
     }
 
+    const addTask = (title: string) => {
+        setTasks([{id: v1(), title: title, isDone: false}, ...tasks]);
+    }
+
 
     return (
         <div className="App">
             <TodoList title={"What to learn"}
                       tasks={tasksForTodoList}
                       removeTask={removeTask}
-                      changeFilter={changeFilter}/>
+                      changeFilter={changeFilter}
+                      addTask={addTask}
+            />
 
         </div>
     );
